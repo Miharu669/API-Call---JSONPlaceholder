@@ -27,7 +27,7 @@ class UserManager {
     async loadUsers() {
         try {
             const response = await fetch(this.apiUrl);
-            if (!response.ok) throw new Error('Error al cargar usuarios');
+            if (!response.ok) throw new Error('Error loading users');
             const data = await response.json();
             this.users = data.map(user => new User(user.id, user.name, user.address.city, user.phone));
         } catch (error) {
@@ -54,8 +54,9 @@ class UserManager {
     async getUserById(id) {
         try {
             const response = await fetch(`${this.apiUrl}/${id}`);
-            if (!response.ok) throw new Error('Usuario no encontrado');
+            if (!response.ok) throw new Error('User not found');
             const data = await response.json();
+            console.log('User found:', data);
             return new User(data.id, data.name, data.address.city, data.phone);
         } catch (error) {
             console.error('Error fetching user:', error);
